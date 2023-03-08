@@ -1,0 +1,11 @@
+com\barclays\ibm\productservice\dto\ProductRequest$ProductRequestBuilder.class
+com\barclays\ibm\productservice\model\Product.class
+com\barclays\ibm\productservice\dto\ProductResponse$ProductResponseBuilder.class
+com\barclays\ibm\productservice\ProductServiceApplication.class
+com\barclays\ibm\productservice\dto\ProductResponse.class
+com\barclays\ibm\productservice\controller\ProductController.class
+com\barclays\ibm\productservice\model\Product$ProductBuilder.class
+com\barclays\ibm\productservice\dto\ProductRequest.class
+com\barclays\ibm\productservice\repository\ProductRepository.class
+com\barclays\ibm\productservice\service\ProductService.class
+com\barclays\ibm\productservice\service\ProductServiceImpl.class

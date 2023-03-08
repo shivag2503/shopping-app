@@ -1,0 +1,6 @@
+com\barclays\ibm\inventoryservice\service\InventoryService.class
+com\barclays\ibm\inventoryservice\repository\InventoryRepository.class
+com\barclays\ibm\inventoryservice\InventoryServiceApplication.class
+com\barclays\ibm\inventoryservice\model\Inventory.class
+com\barclays\ibm\inventoryservice\controller\InventoryController.class
+com\barclays\ibm\inventoryservice\service\InventoryServiceImpl.class

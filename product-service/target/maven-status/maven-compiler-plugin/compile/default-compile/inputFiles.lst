@@ -1,0 +1,8 @@
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\ProductServiceApplication.java
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\service\ProductService.java
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\dto\ProductResponse.java
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\repository\ProductRepository.java
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\model\Product.java
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\service\ProductServiceImpl.java
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\controller\ProductController.java
+B:\spring\basic\microservice-new\product-service\src\main\java\com\barclays\ibm\productservice\dto\ProductRequest.java

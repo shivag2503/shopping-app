@@ -1,0 +1,9 @@
+com\barclays\ibm\orderservice\model\OrderLineItems.class
+com\barclays\ibm\orderservice\controller\OrderController.class
+com\barclays\ibm\orderservice\repository\OrderRepository.class
+com\barclays\ibm\orderservice\service\OrderService.class
+com\barclays\ibm\orderservice\service\OrderServiceImpl.class
+com\barclays\ibm\orderservice\OrderServiceApplication.class
+com\barclays\ibm\orderservice\model\Order.class
+com\barclays\ibm\orderservice\dto\OrderLineItemsDto.class
+com\barclays\ibm\orderservice\dto\OrderRequestDto.class
