@@ -1,5 +1,6 @@
 package com.barclays.ibm.orderservice.service;
 
+import com.barclays.ibm.orderservice.dto.InventoryResponse;
 import com.barclays.ibm.orderservice.dto.OrderLineItemsDto;
 import com.barclays.ibm.orderservice.dto.OrderRequestDto;
 import com.barclays.ibm.orderservice.model.Order;
@@ -8,7 +9,9 @@ import com.barclays.ibm.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final WebClient webClient;
 
     @Override
     public void placeOrder(OrderRequestDto orderRequest) {
@@ -31,7 +35,27 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
 
         order.setOrderLineItemsList(orderLineItems);
-        orderRepository.save(order);
+
+        List<String> skuCodes =order.getOrderLineItemsList().stream()
+                .map(OrderLineItems::getSkuCode)
+                .collect(Collectors.toList());
+
+        // Call inventory service and place the order if the product is in stock
+        InventoryResponse[] inventoryResponses = webClient.get()
+                .uri("http://localhost:8082/api/v1/inventory",
+                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+                .retrieve()
+                .bodyToMono(InventoryResponse[].class)
+                .block();
+
+        boolean allProductsIsInStock =
+                Arrays.stream(inventoryResponses).allMatch(InventoryResponse::getIsInStock);
+
+        if (Boolean.TRUE.equals(allProductsIsInStock)) {
+            orderRepository.save(order);
+        } else {
+            throw new IllegalArgumentException("Product is not in stock. Try again later!!");
+        }
 
     }
 
