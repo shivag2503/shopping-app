@@ -1,0 +1,1 @@
+package com.barclays.ibm.orderservice.event;  public class OrderPlacedEvent { }
