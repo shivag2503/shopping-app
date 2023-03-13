@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
     private final WebClient.Builder webClientBuilder;
 
     @Override
-    public void placeOrder(OrderRequestDto orderRequest) {
+    public String placeOrder(OrderRequestDto orderRequest) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
 
@@ -36,26 +36,30 @@ public class OrderServiceImpl implements OrderService {
 
         order.setOrderLineItemsList(orderLineItems);
 
-        List<String> skuCodes =order.getOrderLineItemsList().stream()
+        List<String> skuCodes = order.getOrderLineItemsList().stream()
                 .map(OrderLineItems::getSkuCode)
                 .collect(Collectors.toList());
 
-        // Call inventory service and place the order if the product is in stock
-        InventoryResponse[] inventoryResponses = webClientBuilder.build().get()
-                .uri("http://inventory-service/api/v1/inventory",
-                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-                .retrieve()
-                .bodyToMono(InventoryResponse[].class)
-                .block();
 
-        boolean allProductsIsInStock =
-                Arrays.stream(inventoryResponses).allMatch(InventoryResponse::getIsInStock);
 
-        if (Boolean.TRUE.equals(allProductsIsInStock)) {
-            orderRepository.save(order);
-        } else {
-            throw new IllegalArgumentException("Product is not in stock. Try again later!!");
-        }
+            // Call inventory service and place the order if the product is in stock
+            InventoryResponse[] inventoryResponses = webClientBuilder.build().get()
+                    .uri("http://inventory-service/api/v1/inventory",
+                            uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+                    .retrieve()
+                    .bodyToMono(InventoryResponse[].class)
+                    .block();
+
+            boolean allProductsIsInStock =
+                    Arrays.stream(inventoryResponses).allMatch(InventoryResponse::getIsInStock);
+
+            if (Boolean.TRUE.equals(allProductsIsInStock)) {
+                orderRepository.save(order);
+                return "Order placed successfully!!";
+            } else {
+                throw new IllegalArgumentException("Product is not in stock. Try again later!!");
+            }
+
 
     }
 

@@ -4,5 +4,5 @@ import com.barclays.ibm.orderservice.dto.OrderRequestDto;
 
 public interface OrderService {
 
-    void placeOrder(OrderRequestDto orderRequest);
+    String placeOrder(OrderRequestDto orderRequest);
 }
